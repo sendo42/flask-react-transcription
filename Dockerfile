@@ -11,7 +11,9 @@ COPY app/ .
 
 EXPOSE 8000
 
-ENTRYPOINT [ "python3", "app.py" ]
+ENTRYPOINT [ "uvicorn", "main:app","--host", "0.0.0.0", "--port", "8000", "--reload"]
+# reloadで開発環境でもコードが変わったら即座に変わる。
+
 
 # コマンド 使い方例
 # python バージョン選び方 https://www.docker.com/ja-jp/blog/containerized-python-development-part-1/
