@@ -1,9 +1,52 @@
 services:
   api:
+<<<<<<< HEAD
     build: .
+=======
+    build: ./docker/api
+>>>>>>> 6d5cce9 (Postgreさんを召喚、方針ちょびっと)
     container_name: fastapi-app
     ports:
       - "8000:8000"
     volumes:
+<<<<<<< HEAD
       - ./app:/app
     stop_signal: SIGINT
+=======
+      - ./api:/api
+    stop_signal: SIGINT
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+      # まだ書いてないけど性能で困りそうなのでやるメモしとこ
+      # 適当にコピーして持ってきただけだけど
+      # TODO:
+      # - 接続数が増えたら max_connections を調整
+      # - メモリ制限が決まったら shared_buffers を調整
+      # - その他の項目はdiscordにメモっとく
+      - ./docker/db/my_postgresql.conf:/etc/postgresql/postgresql.conf
+
+      # TODO:
+      # - 外部接続を許可する場合に IP 制御を追加 海外とかから襲われたり同一IPのやつ
+      - ./docker/db/my_pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf
+    ports:
+      - "5432:5432"
+
+
+volumes:
+  postgres_data:
+>>>>>>> 6d5cce9 (Postgreさんを召喚、方針ちょびっと)

@@ -1,0 +1,9 @@
+fastapi
+requests
+openai-whisper
+uvicorn
+python-multipart
+pytest
+httpx
+
+
